@@ -170,6 +170,37 @@ cases:
   - data: {}
     input_term: '{
         "graph": {
+          "s": ["d"],
+          "d": ["p", "w"],
+          "p": ["w"],
+          "w": ["o"],
+          "o": []
+        },
+        "initial": ["s"]
+      }'
+    modules:
+      - |
+        package reachable
+
+        p = result {
+          graph.reachable_paths(input.graph, input.initial, result)
+        }
+    note: reachable_paths/shared_ancestor
+    query: data.reachable.p = x
+    want_result:
+      - x:
+          - - s
+            - d
+            - p
+            - w
+            - o
+          - - s
+            - d
+            - w
+            - o
+  - data: {}
+    input_term: '{
+        "graph": {
           "a": ["b"],
           "b": ["nonexistent"],
         },
